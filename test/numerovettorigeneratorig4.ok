@@ -1,0 +1,19 @@
+Group:  10 , 1	signature: [ 5, 5, 2, 2 ]	Generators: [...]	Generators: [...]	g: 4
+Group:  10 , 2	signature: [ 2, 2, 5, 5 ]	Generators: [...]	g: 4
+Group:  12 , 3	signature: [ 2, 3, 3, 3 ]	Generators: [...]	g: 4
+Group:  12 , 4	signature: [ 2, 2, 2, 2, 2 ]	Generators: [...]	g: 4
+Group:  12 , 4	signature: [ 2, 3, 6, 2 ]	Generators: [...]	g: 4
+Group:  12 , 5	signature: [ 2, 2, 6, 3 ]	Generators: [...]	g: 4
+Group:  16 , 7	signature: [ 2, 2, 8, 2 ]	Generators: [...]	g: 4
+Group:  18 , 3	signature: [ 3, 3, 2, 2 ]	Generators: [...]	Generators: [...]	g: 4
+Group:  18 , 4	signature: [ 3, 3, 2, 2 ]	Generators: [...]	g: 4
+Group:  20 , 4	signature: [ 2, 2, 5, 2 ]	Generators: [...]	g: 4
+Group:  24 , 12	signature: [ 4, 2, 2, 2 ]	Generators: [...]	g: 4
+Group:  36 , 10	signature: [ 2, 2, 3, 2 ]	Generators: [...]	g: 4
+Group:  4 , 2	signature: [ 2, 2, 2, 2, 2, 2, 2 ]	Generators: [...]	Generators: [...]	g: 4
+Group:  6 , 1	signature: [ 2, 2, 2, 2, 2, 2 ]	Generators: [...]	g: 4
+Group:  6 , 1	signature: [ 3, 3, 3, 2, 2 ]	Generators: [...]	g: 4
+Group:  6 , 2	signature: [ 2, 2, 3, 3, 3 ]	Generators: [...]	g: 4
+Group:  8 , 3	signature: [ 2, 2, 2, 4, 2 ]	Generators: [...]	Generators: [...]	g: 4
+Group:  8 , 4	signature: [ 2, 4, 4, 4 ]	Generators: [...]	g: 4
+Group:  9 , 2	signature: [ 3, 3, 3, 3 ]	Generators: [...]	Generators: [...]	g: 4

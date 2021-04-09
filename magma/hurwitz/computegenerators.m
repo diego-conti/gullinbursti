@@ -19,8 +19,8 @@
 */
 
 
-load "magma/hurwitz/computegeneratorsabelian.m";
 load "magma/hurwitz/computegeneratorsnonabelian.m";
+load "magma/hurwitz/computegeneratorsabelian.m";
 	
 VERSION:="SmallAutG";
 FindGenerators:=function(G, M)

@@ -1,0 +1,17 @@
+columns 7 {
+	output 7
+}
+
+omitrules {
+	condition {
+		column 7
+		contains I:
+	}
+}
+
+inputcolumns 1 {
+	rangeinputcolumn 2
+	textinputcolumn 3
+}
+
+

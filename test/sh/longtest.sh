@@ -1,19 +1,11 @@
-for csv in  $(ls test/longtest/*.csv); do
+for comp in  $(ls test/longtest/*.comp); do
 	rm test/longtest/generatori/*
-	bin/hliðskjálf --input=$csv --output=test/longtest/generatori --nthreads=30 --memory 2 --ignore-known-examples --db ""
-	bin/hliðskjálf --input=$csv --output=test/longtest/generatori --nthreads=6 --memory 10 --ignore-known-examples --db ""
-	bin/hliðskjálf --input=$csv --output=test/longtest/generatori --nthreads=2 --memory 30 --ignore-known-examples --db ""
-	magma -b directory:=test/longtest/generatori test/magma/testnumerovettorigeneratori.m >test/longtest/numerovettorigeneratori.unsorted
-	sort test/longtest/numerovettorigeneratori.unsorted >test/longtest/numerovettorigeneratori`basename $csv .csv`.test
-done
-
-for csv in  $(ls test/longtest/*.csv); do
-	rm test/longtest/generatori/*
-	bin/hliðskjálf --input=$csv --output=test/longtest/generatori --nthreads=30 --memory 2 --ignore-known-examples --db "" --only-test-coleman-oort=testVersion
-	bin/hliðskjálf --input=$csv --output=test/longtest/generatori --nthreads=6 --memory 10 --ignore-known-examples --db "" --only-test-coleman-oort=testVersion
-	bin/hliðskjálf --input=$csv --output=test/longtest/generatori --nthreads=2 --memory 30 --ignore-known-examples --db "" --only-test-coleman-oort=testVersion
-	magma -b directory:=test/longtest/generatori test/magma/testnumerovettorigeneratori.m >test/longtest/numerovettorigeneratori.unsorted
-	sort test/longtest/numerovettorigeneratori.unsorted >test/longtest/numerovettorigeneratori`basename $csv .csv`.co.test
+	hliðskjálf --script=magma/runcomputation.m --schema schema.info --computations=$comp --workoutput=test/longtest/generatori --nthreads=30 --memory 2	
+	hliðskjálf --script=magma/runcomputation.m --schema schema.info --computations=$comp --workoutput=test/longtest/generatori --nthreads=6 --memory 10
+	hliðskjálf --script=magma/runcomputation.m --schema schema.info --computations=$comp --workoutput=test/longtest/generatori --nthreads=2 --memory 30
+	magma -b path:=test/longtest/generatori magma/printgenerators.m >test/longtest/vettorigeneratori.unprocessed
+	awk 'BEGIN {ORS = "\t"} {switch ($1) { case "Generators:" : print "Generators: [...]"; break; case "g:" : ORS = "\n"; print; ORS = "\t"; break; case "Loading" : break; default: print }}' test/longtest/vettorigeneratori.unprocessed  | sort 	>test/longtest/vettorigeneratori`basename $comp .comp`.test 
+	rm test/longtest/vettorigeneratori.unprocessed 
 done
 
 for out in $(ls test/longtest/*.ok); do

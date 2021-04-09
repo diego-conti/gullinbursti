@@ -6,20 +6,13 @@ magma -b minG:=60 maxG:=60 outFile:=test/segnature.test magma/createlistofcomput
 sort test/segnature.test >test/segnature60.test
 rm test/segnature.test
 
-for csv in  $(ls test/*.csv); do
+for comp in  $(ls test/comp/*.comp); do
 	rm test/generatori/*
-	bin/hliðskjálf --input=$csv --output=test/generatori --nthreads=30 --memory 2 --ignore-known-examples --db ""
-	magma -b directory:=test/generatori test/magma/testnumerovettorigeneratori.m >test/numerovettorigeneratori.unsorted
-	sort test/numerovettorigeneratori.unsorted >test/numerovettorigeneratori`basename $csv .csv`.test 
+	hliðskjálf --script=magma/runcomputation.m --schema schema.info --computations=$comp --workoutput=test/generatori --nthreads=30 --memory 2
+	magma -b path:=test/generatori magma/printgenerators.m >test/vettorigeneratori.unprocessed
+	awk 'BEGIN {ORS = "\t"} {switch ($1) { case "Generators:" : print "Generators: [...]"; break; case "g:" : ORS = "\n"; print; ORS = "\t"; break; case "Loading" : break; default: print }}' test/vettorigeneratori.unprocessed  | sort 	>test/numerovettorigeneratori`basename $comp .comp`.test 
+	rm test/vettorigeneratori.unprocessed 
 done
-
-for csv in  $(ls test/*.csv); do
-	rm test/generatori/*
-	bin/hliðskjálf --input=$csv --output=test/generatori --nthreads=30 --memory 2 --ignore-known-examples --db "" --only-test-coleman-oort=testVersion
-	magma -b directory:=test/generatori test/magma/testnumerovettorigeneratori.m >test/numerovettorigeneratori.unsorted
-	sort test/numerovettorigeneratori.unsorted >test/numerovettorigeneratori`basename $csv .csv`.co.test 
-done
-
 
 
 for out in $(ls test/*.ok); do

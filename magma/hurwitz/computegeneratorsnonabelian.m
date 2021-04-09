@@ -82,7 +82,7 @@ _GeneratorsOfAutG:=function(groupData,X,conjugacyClasses)
 	stabilizerInAutG:=AutomorphismsPreservingConjugacyClasses(groupData`group, {* C: C in conjugacyClasses *});		
 	for g in Generators(stabilizerInAutG) do 
 		h:=_AutomorphismAsBraid(groupData,conjugacyClasses,g);
-		Include(~generatori,SymmetricGroup(X) ! [BraidAction(x	@g,h) : x in X]);
+		Include(~generators,SymmetricGroup(X) ! [BraidAction(x	@g,h) : x in X]);
 	end for;
 	return generators;
 end function;
