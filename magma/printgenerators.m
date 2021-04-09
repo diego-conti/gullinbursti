@@ -37,7 +37,7 @@ end procedure;
 PrintGenerators:=procedure(csvfile)
 		for generators in GeneratorsInFile(csvfile) do
 			print "Group: ",generators`d,",",generators`n;
-			M:=[Order(g): g in Rep(generators`X)];
+			M:=Sort([Order(g): g in Rep(generators`X)]);
 			print "signature:",M;
 			for x in generators`X do 
 				print "Generators: ",x; 

@@ -1,11 +1,11 @@
 Group:  12 , 3	signature: [ 2, 2, 3, 3 ]	Generators: [...]	g: 3
-Group:  12 , 4	signature: [ 2, 6, 2, 2 ]	Generators: [...]	g: 3
-Group:  16 , 11	signature: [ 2, 2, 4, 2 ]	Generators: [...]	g: 3
-Group:  16 , 13	signature: [ 2, 2, 4, 2 ]	Generators: [...]	g: 3
+Group:  12 , 4	signature: [ 2, 2, 2, 6 ]	Generators: [...]	g: 3
+Group:  16 , 11	signature: [ 2, 2, 2, 4 ]	Generators: [...]	g: 3
+Group:  16 , 13	signature: [ 2, 2, 2, 4 ]	Generators: [...]	g: 3
 Group:  24 , 12	signature: [ 2, 2, 2, 3 ]	Generators: [...]	g: 3
 Group:  4 , 2	signature: [ 2, 2, 2, 2, 2, 2 ]	Generators: [...]	Generators: [...]	g: 3
-Group:  6 , 1	signature: [ 3, 2, 2, 2, 2 ]	Generators: [...]	g: 3
-Group:  8 , 2	signature: [ 4, 2, 2, 4 ]	Generators: [...]	Generators: [...]	Generators: [...]	g: 3
+Group:  6 , 1	signature: [ 2, 2, 2, 2, 3 ]	Generators: [...]	g: 3
+Group:  8 , 2	signature: [ 2, 2, 4, 4 ]	Generators: [...]	Generators: [...]	Generators: [...]	g: 3
 Group:  8 , 3	signature: [ 2, 2, 2, 2, 2 ]	Generators: [...]	g: 3
-Group:  8 , 3	signature: [ 4, 4, 2, 2 ]	Generators: [...]	g: 3
+Group:  8 , 3	signature: [ 2, 2, 4, 4 ]	Generators: [...]	g: 3
 Group:  8 , 5	signature: [ 2, 2, 2, 2, 2 ]	Generators: [...]	g: 3

@@ -22,7 +22,7 @@
 load "magma/hurwitz/computegeneratorsnonabelian.m";
 load "magma/hurwitz/computegeneratorsabelian.m";
 	
-VERSION:="SmallAutG";
+VERSION:="FastAbelian";
 FindGenerators:=function(G, M)
 	if (IsAbelian(G)) then return FindGeneratorsAbelian(G,M);
 	else return FindGeneratorsNonabelian(G,M);
