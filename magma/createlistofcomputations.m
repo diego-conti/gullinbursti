@@ -53,16 +53,38 @@ RangeOfSmallGroups:=function(d)
 	return "1.." cat Sprint(NumberOfSmallGroups(d));
 end function;
 
+if assigned onlyAbelian then 
+
+WriteComputationsOrderD:=procedure(d,M,file)
+	P := SmallGroupProcess(d);
+	for n in [1..NumberOfSmallGroups(d)] do
+		G := Current(P);
+		if IsAbelian(G) then 
+				WriteLine(d,Sprint(n) cat ".." cat Sprint(n),M,file);
+		end if;
+		Advance(~P);
+	end for;
+end procedure;
+
+else
+
+WriteComputationsOrderD:=procedure(d,M,file)
+	WriteLine(d,RangeOfSmallGroups(d),M,file);
+end procedure;
+
+end if;
+
 WriteComputations:=procedure(g,file)
 	boundR:=2*g+2;
 	if maxR gt 0 then boundR:=Min(boundR,maxR); end if;
 	for r in [minR..boundR] do
 	for signature in Signatures_g_r(g,r) do
 		d:=signature`d;
-		WriteLine(d,RangeOfSmallGroups(d),signature`M,file);
+		WriteComputationsOrderD(d,signature`M,file);
 	end for;
 	end for;
 end procedure;
+
 
 file:=Open(outFile,"w");
 
