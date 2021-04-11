@@ -25,7 +25,7 @@ It takes the following parameters:
 processId a unique string identifying the process. Useful for parallelization; it determines the name of the file to be used for output
 dataFile a file containing the computations to be performed, each line having the form d;n;[m_1,...,m_r], corresponding to SmallGroup(d,n) and signature [m_1,...,m_r]
 outputPath a directory where output should be stored; the directory must already exist
-memory the memory limit in GB
+megabytes the memory limit in MB
 */
 
 load "magma/hurwitz/computegenerators.m";
@@ -37,7 +37,7 @@ if assigned printVersion then print VERSION; quit; end if;
 if not assigned processId then error "variable processId should be assigned to unique string"; end if;
 if not assigned dataFile then error "variable dataFile should point to a valid data file"; end if;
 if not assigned outputPath then error "variable outputPath should point to a directory to contain the output"; end if;
-if not assigned memory then error  "variable memory should indicate a memory limit in GB (or 0 for no limit)"; end if;
+if not assigned megabytes then error  "variable megabytes should indicate a memory limit in MB (or 0 for no limit)"; end if;
 
 AbelianizationInvariants:=function(G)
 	group:=G;
@@ -130,7 +130,7 @@ FindGeneratorsFromFile:=procedure(fileName,outputPath)
 end procedure;
 
 
-SetMemoryLimit(StringToInteger(memory)*1024*1024*1024);
+SetMemoryLimit(StringToInteger(memory)*1024*1024);
 SetQuitOnError(true);
 SetColumns(1024);
 
