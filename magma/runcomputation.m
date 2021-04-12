@@ -130,7 +130,7 @@ FindGeneratorsFromFile:=procedure(fileName,outputPath)
 end procedure;
 
 
-SetMemoryLimit(StringToInteger(memory)*1024*1024);
+SetMemoryLimit(StringToInteger(megabytes)*1024*1024);
 SetQuitOnError(true);
 SetColumns(1024);
 
