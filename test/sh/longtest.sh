@@ -1,8 +1,6 @@
 for comp in  $(ls test/longtest/*.comp); do
 	rm test/longtest/generatori/*
-	hliðskjálf --script=magma/runcomputation.m --schema schema.info --computations=$comp --workoutput=test/longtest/generatori --nthreads=30 --memory 2	
-	hliðskjálf --script=magma/runcomputation.m --schema schema.info --computations=$comp --workoutput=test/longtest/generatori --nthreads=6 --memory 10
-	hliðskjálf --script=magma/runcomputation.m --schema schema.info --computations=$comp --workoutput=test/longtest/generatori --nthreads=2 --memory 30
+	hliðskjálf --script=magma/runcomputation.m --schema schema.info --computations=$comp --workoutput=test/longtest/generatori --nthreads=30 --total-memory 60 --stdio
 	magma -b path:=test/longtest/generatori magma/printgenerators.m >test/longtest/vettorigeneratori.unprocessed
 	awk 'BEGIN {ORS = "\t"} {switch ($1) { case "Generators:" : print "Generators: [...]"; break; case "g:" : ORS = "\n"; print; ORS = "\t"; break; case "Loading" : break; default: print }}' test/longtest/vettorigeneratori.unprocessed  | sort 	>test/longtest/vettorigeneratori`basename $comp .comp`.test 
 	rm test/longtest/vettorigeneratori.unprocessed 

@@ -80,22 +80,11 @@ _GeneratorsFromLine:=function(dAsString,nAsString,csvlist)
 	return generators;
 end function;
 
-_GetLineWithBalancedBraces:=function(file)
-	line:=Gets(file);
-	if IsEof(line) or "{" notin line then return line; end if;
-	while "}" notin line do
-		additional_line:=Gets(file);
-		if IsEof(additional_line) then return line; end if;
-		line cat:=additional_line;
-	end while;
-	return line;
-end function;
-
 GeneratorsInFile:=function(csvfile) 
 	result:=[* *];
 	file:=Open(csvfile,"r");
 	while true do
-		line:=_GetLineWithBalancedBraces(file);
+		line:=Gets(file);
 		if IsEof(line) then break; end if;
 		valuesInLine:=Split(line,";");
 		generators:=_GeneratorsFromLine(valuesInLine[1],valuesInLine[2],valuesInLine[7]);

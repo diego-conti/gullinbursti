@@ -20,24 +20,18 @@ This script runs the code that classifies spherical systems of generators corres
 magma processId:=1 dataFile:=data.csv outputPath:=co memory:=1 magma/runcomputation.m
 invokes the computation on the signatures contained in the file data.csv, using a maximum memory of 1 GB and writing the output to co/1.csv.
 The script performs one computation at a time; if memory runs out during a computation, the script terminates. The offending data can be recovered by comparing the dataFile to the output.
+The output is written to stdout
 
 It takes the following parameters:
 processId a unique string identifying the process. Useful for parallelization; it determines the name of the file to be used for output
 dataFile a file containing the computations to be performed, each line having the form d;n;[m_1,...,m_r], corresponding to SmallGroup(d,n) and signature [m_1,...,m_r]
-outputPath a directory where output should be stored; the directory must already exist
 megabytes the memory limit in MB
 */
 
 load "magma/hurwitz/computegenerators.m";
 load "magma/include/genus.m";
 load "magma/include/memoryandtimeusage.m";
-
-if assigned printVersion then print VERSION; quit; end if;
-
-if not assigned processId then error "variable processId should be assigned to unique string"; end if;
-if not assigned dataFile then error "variable dataFile should point to a valid data file"; end if;
-if not assigned outputPath then error "variable outputPath should point to a directory to contain the output"; end if;
-if not assigned megabytes then error  "variable megabytes should indicate a memory limit in MB (or 0 for no limit)"; end if;
+load "magma/include/hliðskjálflayer.m";
 
 AbelianizationInvariants:=function(G)
 	group:=G;
@@ -86,10 +80,6 @@ end function;
 
 EXCLUDED_STRING:="I";
 
-WriteToOutputFile:=procedure(line,outputPath)
-	Write(outputPath cat "/" cat Sprint(processId) cat ".work",line);
-end procedure;
-
 ListToCsv:=function(containerOfPrintable, separator) 
 	result:="";
 	if IsEmpty(containerOfPrintable) then return result; end if;
@@ -101,39 +91,34 @@ ListToCsv:=function(containerOfPrintable, separator)
 	return result;
 end function;
 
-WriteLineToOutputFile:=procedure(parameters, runningTime, data,outputPath)
+WriteLineToOutput:=procedure(parameters, runningTime, data)
 	firstPart:=[* parameters`d, parameters`n, parameters`M,MBUsedAndTimeSinceLastReset(runningTime),VERSION *];
 	line:= ListToCsv(firstPart,";") cat ";{" cat ListToCsv(data,":") cat "}";
-	WriteToOutputFile(line,outputPath);
+	WriteComputation(line);
 end procedure;
 
-FindGeneratorsFromParameters:=procedure(parameters,outputPath)
+FindGeneratorsFromParameters:=procedure(parameters)
 	local runningTime;
 	ResetTimeAndMemoryUsage(~runningTime);	
   G:=SmallGroup(parameters`d,parameters`n);
   admissible,reasonToExclude:=Admissible(G,parameters`M);
 	if admissible then
 		generators:=SetToSequence(FindGenerators(G,parameters`M));
-		WriteLineToOutputFile(parameters,runningTime,generators,outputPath);
+		WriteLineToOutput(parameters,runningTime,generators);
 	else 
-		WriteLineToOutputFile(parameters,runningTime,[EXCLUDED_STRING, reasonToExclude],outputPath);
+		WriteLineToOutput(parameters,runningTime,[EXCLUDED_STRING, reasonToExclude]);
 	end if;
 end procedure;
 
-FindGeneratorsFromFile:=procedure(fileName,outputPath)
+FindGeneratorsFromFile:=procedure(fileName)
 	file:=Open(fileName,"r");
 	line:=Gets(file);
 	while not IsEof(line) do
-		FindGeneratorsFromParameters(ReadParameters(line),outputPath);
+		FindGeneratorsFromParameters(ReadParameters(line));
 		line:=Gets(file);
 	end while;
 end procedure;
 
-
-SetMemoryLimit(StringToInteger(megabytes)*1024*1024);
-SetQuitOnError(true);
-SetColumns(1024);
-
-FindGeneratorsFromFile(dataFile,outputPath);
+FindGeneratorsFromFile(dataFile);
 
 quit;

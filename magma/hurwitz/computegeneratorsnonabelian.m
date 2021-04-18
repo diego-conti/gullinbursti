@@ -143,9 +143,6 @@ _AddSphericalSystemsOfGeneratorsInConjugacyClassesIfTest:=procedure(conjugacyCla
 end procedure;
 
 _FlushKnownGeneratingSets:=procedure(groupData,~subsetsThatGenerate,~subsetsThatDoNotGenerate,~generators)
-	if not IsEmpty(subsetsThatDoNotGenerate) then
-		print "flushing", #subsetsThatGenerate, #subsetsThatDoNotGenerate;
-	end if;
 	subsetsThatGenerate:={};
 	subsetsThatDoNotGenerate:={};	
 end procedure;

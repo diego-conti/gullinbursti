@@ -8,7 +8,7 @@ rm test/segnature.test
 
 for comp in  $(ls test/comp/*.comp); do
 	rm test/generatori/*
-	hliðskjálf --script=magma/runcomputation.m --schema schema.info --computations=$comp --workoutput=test/generatori --nthreads=30 --memory 2
+	hliðskjálf --script=magma/runcomputation.m --schema schema.info --computations=$comp --workoutput=test/generatori --nthreads=30 --total-memory 60 --stdio
 	magma -b path:=test/generatori magma/printgenerators.m >test/vettorigeneratori.unprocessed
 	awk 'BEGIN {ORS = "\t"} {switch ($1) { case "Generators:" : print "Generators: [...]"; break; case "g:" : ORS = "\n"; print; ORS = "\t"; break; case "Loading" : break; default: print }}' test/vettorigeneratori.unprocessed  | sort 	>test/numerovettorigeneratori`basename $comp .comp`.test 
 	rm test/vettorigeneratori.unprocessed 
