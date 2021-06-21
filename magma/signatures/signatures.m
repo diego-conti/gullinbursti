@@ -123,7 +123,7 @@ Signatures:=function(g)
 	for d in _GroupOrdersForThreeBranchPoints(g) do
 		signatures cat:=  _Signatures_g_d_r(g,d,3);
 	end for;
-	for d in [2.._MaxGroupOrder(g)]  do
+	for d in [2..12*(g-1)]  do
      for r in [4.._MaxBranchPoints(g,d)] do
      		signatures cat:=  _Signatures_g_d_r(g,d,r);
      end for;
