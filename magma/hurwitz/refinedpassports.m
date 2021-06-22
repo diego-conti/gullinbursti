@@ -54,7 +54,8 @@ AutGOnConjugacyClasses:=function(groupData,classes)
   	[_ActionOfAutomorphismOnConjugacyClass(groupData,aut,class) : class in classes]
   	 : aut in Generators(AutG)
 	  ];
-	return PermutationGroup<classes|generators>;
+	Sigma:=PermutationGroup<classes|generators>;
+	return Sigma;
 end function;
 
 FrobeniusSum:=function(characterTable,refinedPassport);
