@@ -42,13 +42,21 @@ _CannotGenerateAbelianization:=function(M,invariants)
 	return false;
 end function;
 
+_KulkarniWiman:=function(orders,d,M)
+  g:=Integers() ! Genus(M,d);
+	if #M eq 3 then
+		return exists {o: o in orders | o gt 4*g+2};
+	else
+		return g gt 2 and exists {o: o in orders | o gt 4*(g-1)};
+	end if;
+end function;
+
 /* a modified version of function Admissible in Algorithm 3 of [CGP]. It returns false,reason if the computation should be skipped, where reason is a string describing the criterion used to exclude the computation.
 It returns true if none of the criteria apply */
 Admissible:=function(G, M)
 	orders:={Order(g): g in G};
 	if exists {m : m in M | m notin orders} then return false,"order"; end if;
-  g:=Integers() ! Genus(M,Order(G));
-	if g gt 2 and exists {o: o in orders | o gt 4*(g-1)} then return false,"KW"; end if;
+  if _KulkarniWiman(orders,Order(G),M) then return false,"KW"; end if;
 	invariants:=_AbelianizationInvariants(G); 
 	if _CannotGenerateAbelianization(M,invariants) then return false,"abelianization"; end if;
  	return true,0;
