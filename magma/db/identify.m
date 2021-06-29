@@ -24,15 +24,13 @@ load "magma/hurwitz/computegeneratorsnonabelian.m";
 AutGOnConjugacyClasses:=function(groupData,classes)
 	Aut:=AutomorphismGroup(groupData`group);
 	A,r:=FPGroup(Aut);
-	generatorsOfA:=[g: g in Generators(A)];
-	generators:=[
+	generatorsOfA:=[g: g in Generators(A)];	//fix an order in the set of generators
+	generatorsOfSigma:=[
   	[_ActionOfAutomorphismOnConjugacyClass(groupData,r(aut),class) : class in classes]
   	 : aut in generatorsOfA
 	  ];
-	Sigma:=sub<SymmetricGroup(classes) | {g: g in generators}>;	//the sequence of generators is converted into a set to work around some bug of Magma
-	n,d:=Explode( IdentifyGroup(Sigma));
-	test,f:=IsIsomorphic(Sigma,SmallGroup(n,d));
-	return Sigma,A,r,hom<A ->Sigma | [generatorsOfA[i] -> Sigma ! generators[i] : i in [1..#generators]] >;	//a list of arrows g->f(g) is passed rather than a vector with a list of generators to work around another bug in Magma.
+	Sigma:=PermutationGroup<classes | generatorsOfSigma>;
+	return Sigma,A,r,hom<A ->Sigma |  [generatorsOfA[i] -> Sigma ! generatorsOfSigma[i] : i in [1..#generatorsOfA]] >;	//a list of arrows g->f(g) is passed rather than a vector to work around the fact that Magma apparently reorders generators in a random way
 end function;
 
 _generatorsFormat:=recformat<
@@ -73,13 +71,7 @@ _GeneratorsWithSameRefinedPassport:=function(generatorsData)
 			automorphism:=r(g@@f);
 			gens:=[automorphism(x): x in generatorsData`gens];
 			if 	{* generatorsData`classMap(g): g in gens *} ne {* c : c in refinedPassport *} then
-				print "error trying to pass from X=",generatorsData`gens, " to refined passport ",refinedPassport;
-				print "refined passport of X is ",RefinedPassport(generatorsData, generatorsData`gens);
-				print "element of Sigma",g;
-				print Sigma;
-				print "automorphism",automorphism;
-				print "it acts as ",[_ActionOfAutomorphismOnConjugacyClass(groupData,automorphism,class) : class in conjugacyClasses];
-				error "logic error";
+				error "error trying to pass from X=",generatorsData`gens, " to refined passport ",refinedPassport;
   		end if;
 			return gens, {D: D in generatorsInDb | RefinedPassport(generatorsData,D) eq refinedPassport};
 		end if;
