@@ -32,6 +32,11 @@ AddSphericalSystemsOfGeneratorsIn:=procedure(groupData,sets,~addIfGenerates, ~su
 	IterateOverSequencesIn(Prune(sets),~addIfGenerates,lastSet,~subsetsThatGenerate,~subsetsThatDoNotGenerate,~generators);
 end procedure;
 
+//for a given a sequence of sets [X_1,...,X_r], add to generators the first sequence [g_1,...,g_r] of spherical systems of generators with g_1\in X_1, ... , g_r\in X_r, if one exists
+AddFirstSphericalSystemOfGenerators:=procedure(groupData,sets,~addIfGenerates, ~subsetsThatGenerate,~subsetsThatDoNotGenerate,~generators)
+	lastSet:=sets[#sets];
+	IterateWhileEmptyOverSequencesIn(Prune(sets),~addIfGenerates,lastSet,~subsetsThatGenerate,~subsetsThatDoNotGenerate,~generators);
+end procedure;
 
 //given a group G and a multiset of conjugacy classes, return the stabilizer of the multiset inside Aut(G)
 AutomorphismsPreservingConjugacyClasses:=function(G, conjugacyClasses)
@@ -117,10 +122,17 @@ _AddSphericalSystemsOfGeneratorsInConjugacyClasses:=procedure(groupData,orderedC
 		
 	X:={};
 	conjugacyClassesAsSets:=_ConjugacyClassesAsSets(groupData,orderedConjugacyClasses);
-	AddSphericalSystemsOfGeneratorsIn(groupData,conjugacyClassesAsSets,~AddIfShortSequenceGenerates,~subsetsThatGenerate,~subsetsThatDoNotGenerate,~X);
-	if IsEmpty(X) then return; end if;
-	hurwitzEquivalenceGroup:=_HurwitzEquivalenceGroup(groupData,X,orderedConjugacyClasses);
-	generators join:={orbitSizeAndRepresentative[2] : orbitSizeAndRepresentative in OrbitRepresentatives(hurwitzEquivalenceGroup)};
+	if groupData`dihedral then 
+		//use the fact that for dihedral groups Hurwitz equivalence acts transitively on spherical systems of generators with a fixed refined passport, 
+		//see Catanese, Lönne, Perroni: Irreducibility of the space of dihedral covers of the projective line of a given numerical type, Rend. Lincei Mat. Appl. 22 (2011), 291–309
+		AddFirstSphericalSystemOfGenerators(groupData,conjugacyClassesAsSets,~AddIfShortSequenceGenerates,~subsetsThatGenerate,~subsetsThatDoNotGenerate,~X);
+		generators join:=X;
+	else	
+		AddSphericalSystemsOfGeneratorsIn(groupData,conjugacyClassesAsSets,~AddIfShortSequenceGenerates,~subsetsThatGenerate,~subsetsThatDoNotGenerate,~X);
+		if IsEmpty(X) then return; end if;
+		hurwitzEquivalenceGroup:=_HurwitzEquivalenceGroup(groupData,X,orderedConjugacyClasses);
+		generators join:={orbitSizeAndRepresentative[2] : orbitSizeAndRepresentative in OrbitRepresentatives(hurwitzEquivalenceGroup)};
+	end if;
 end procedure;
 
 _OrderedConjugacyClasses:=function(dataToComputeGenerators,conjugacyClasses) 

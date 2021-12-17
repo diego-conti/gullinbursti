@@ -15,17 +15,33 @@
 	You should have received a copy of the GNU General Public License
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ****************************************************************************
-	
+
 */
 
-
-load "magma/hurwitz/computegeneratorsnonabelian.m";
-load "magma/hurwitz/computegeneratorsabelian.m";
+_ElementsOfOrderTwoUpToConjugacy:=function(G)
+	result:=[* *];
+	for class in Classes(G) do
+		order,length,rep:=Explode(class);
+		if order eq 2 then Append(~result,rep); end if;
+	end for;
+	return result;
+end function;
 	
-VERSION:="Dihedral";
-FindGenerators:=function(G, M)
-	if (IsAbelian(G)) then return FindGeneratorsAbelian(G,M);
-	else return FindGeneratorsNonabelian(G,M);
-	end if;
+/* if G=D(A), return true, A, else return false, G*/
+IsGeneralizedDihedral:=function(G)
+	halfOrderG:=Order(G)/2;
+	abelianNormalSubgroupsOfIndexTwo:=[* H`subgroup: H in NormalSubgroups(G) | H`order eq halfOrderG and IsAbelian(H`subgroup) *];	
+	elementsOfOrderTwo:=_ElementsOfOrderTwoUpToConjugacy(G);	
+	for H in abelianNormalSubgroupsOfIndexTwo do
+		for sigma in elementsOfOrderTwo do
+			if forall {h^sigma eq h^-1 : h in Generators(H)} then return true, H; end if;
+		end for;
+	end for;	
+	return false,G;
 end function;
 
+
+IsDihedral:=function(G)
+	test,A:=IsGeneralizedDihedral (G);
+	return test and IsCyclic(A);
+end function;

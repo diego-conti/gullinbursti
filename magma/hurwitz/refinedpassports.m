@@ -18,15 +18,15 @@
 
 This file contains some functions which are used both by the generic version of the algorithm (computegeneratorsnonabelian.m) and the version optimized for abelian groups (computegeneratorsabelian.m)
 */
+load "magma/include/generalizeddihedral.m";
 
-
-_groupDataFormat:=recformat<group,classMap,classSizes,gModulesData,characterTable,lastOrder,signatureElementsWithLastOrder>;
+_groupDataFormat:=recformat<group,classMap,classSizes,gModulesData,characterTable,lastOrder,signatureElementsWithLastOrder,dihedral>;
 
 //immutable data used in the computation of generators
 GroupData:=function(G)
 	return rec<_groupDataFormat | group:=G,classMap:=ClassMap(G),
 		classSizes:=[#Conjugates(G,ClassRepresentative(G,i)) : i in [1..Nclasses(G)]],
-		gModulesData:=GModulesData(G),characterTable:=CharacterTable(G)
+		gModulesData:=GModulesData(G),characterTable:=CharacterTable(G), dihedral:=IsDihedral(G)
 	>;
 end function;
 
