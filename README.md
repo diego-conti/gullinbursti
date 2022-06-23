@@ -10,7 +10,7 @@ The algorithm is explained in
 
 If you use this code in your research, please quote our papers!
 
-Partly based on [http://www.science.unitn.it/~pignatel/papers/Nodal.magma](http://www.science.unitn.it/~pignatel/papers/Nodal.magma) and [centone](https://github.com/diego-conti/centone)
+Partly based on [https://pignatelli.maths.unitn.it/papers/RegP-QByPgGamma.magma](https://pignatelli.maths.unitn.it/papers/RegP-QByPgGamma.magma) and [centone](https://github.com/diego-conti/centone)
 
 ### Main Magma scripts
 The program contains four main Magma scripts:
@@ -59,22 +59,22 @@ The sh directory contains some bash scrips that invoke the Magma scripts with ex
 Computes signatures up to d=2000, using GNU parallel to parallelize the computation
 
 ### sh/createlistofcomputations.sh
-Creates two lists of computations, corresponding to noncyclic signatures with g<=100, r>=4 and g<=7, r>=3.
+Creates some lists of computations, corresponding to 2<=g<=20, 21<=g<=30, and each value of g between 31 and 40.
 
 ### sh/runcomputations.sh
 Runs the main script through a list of computations using a single process
 
 For example, run 
 
-	sh/runcomputations.sh 2-7.comp 
+	sh/runcomputations.sh 2-20.comp 
 	
-to compute topological types with 2<=g<=7.
+to compute topological types with 2<=g<=20.
 
 ### Hliðskjálf integration
 
 The main script is designed to be run from [Hliðskjálf](https://github.com/diego-conti/hlidskjalf), to handle parallelization efficiently, e.g.
 
-	hliðskjálf --schema schema.info --db db --computations 2-7.comp --script magma/runcomputation.m 
-	yggdrasill --schema schema.info --db db --workoutput 2-7
+	hliðskjálf --schema schema.info --db db --computations 2-20.comp --script magma/runcomputation.m 
+	yggdrasill --schema schema.info --db db --workoutput 2-20
 	
 This has the effect of computing (in parallel) all topological types corresponding to genus between 2 and 7, and updating the 'database' in the folder db. 
