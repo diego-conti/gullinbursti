@@ -4,7 +4,7 @@ A [Magma](http://magma.maths.usyd.edu.au/magma/) program to classify topological
  
 The algorithm is explained in
 
-[CGP] D. Conti, A. Ghigi, R. Pignatelli. Topological types of actions on curves [arXiv:2102.12349](http://arxiv.org/abs/2102.12349)
+[CGP] D. Conti, A. Ghigi, R. Pignatelli. Topological types of actions on curves [????](http://arxiv.org/abs/2102.12349)
 
 [CGP2] D. Conti, A. Ghigi, R. Pignatelli. Some evidence for the Coleman-Oort conjecture. [arXiv:2102.12349](http://arxiv.org/abs/2102.12349)
 
@@ -46,9 +46,6 @@ The program also contains the following Magma scripts:
 ### magma/db/generatorsfromdb.m
 Retrieve the computed generators from a 'database'. The database is a folder with some plain-text file produced by the utility [yggdrasill](https://github.com/diego-conti/hlidskjalf).
 
-### magma/db/generatorsfromserver.m
-Retrieves the computed generators from the server located at [pascal.unipv.it](https://pascal.unipv.it:4200)
-
 ### magma/db/identify.m
 Identifies the entry in our database corresponding to a given system of spherical generator
 
@@ -77,4 +74,4 @@ The main script is designed to be run from [Hliðskjálf](https://github.com/die
 	hliðskjálf --schema schema.info --db db --computations 2-20.comp --script magma/runcomputation.m 
 	yggdrasill --schema schema.info --db db --workoutput 2-20
 	
-This has the effect of computing (in parallel) all topological types corresponding to genus between 2 and 7, and updating the 'database' in the folder db. 
+This has the effect of computing (in parallel) all topological types corresponding to genus between 2 and 20, and updating the 'database' in the folder db. 
