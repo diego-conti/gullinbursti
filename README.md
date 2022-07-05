@@ -1,10 +1,10 @@
 # Gullinbursti
 
-A [Magma](http://magma.maths.usyd.edu.au/magma/) program to classify topological types of Galois coverings of the projective line.
+A [Magma](http://magma.maths.usyd.edu.au/magma/) program to classify topological types of Galois covers of the projective line.
  
 The algorithm is explained in
 
-[CGP] D. Conti, A. Ghigi, R. Pignatelli. Topological types of actions on curves [????](http://arxiv.org/abs/2102.12349)
+[CGP] D. Conti, A. Ghigi, R. Pignatelli. Topological types of actions on curves [arXiv:2207.00981](http://arxiv.org/abs/2207.00981)
 
 [CGP2] D. Conti, A. Ghigi, R. Pignatelli. Some evidence for the Coleman-Oort conjecture. [arXiv:2102.12349](http://arxiv.org/abs/2102.12349)
 
