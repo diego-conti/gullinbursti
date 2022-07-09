@@ -24,6 +24,10 @@ It takes parameters minG (default 2), maxG, minR (default 3), maxR (default infi
 For each signature (d,[m_1,...,m_r]) with genus g and r branch points, minG\leq g \leq maxG, minR\leq r\leq maxR, r<=2*g+2 it writes on the file the line
 d;n;[m_1,..,m_r]
 where n is the number of groups of order d, i.e. n=NumberOfSmallGroups(d)
+
+By default, if group orders above the limit of the smallgroup database occur, an error is thrown. If the optional parameter ignoreHighOrders is assigned, high group orders are simply ignored, e.g.
+
+magma maxG:=40 outFile:=computations.csv ignoreHighOrders:=true magma/signatures/createlistofcomputations.m 
 */
 
 load "magma/signatures/signatures.m";
@@ -38,6 +42,12 @@ if maxR ne "-1" then
 else 
 	print "creating list of computations, ",minG,"\\leq g \\leq ",maxG, ", ",minR,"\\leq r",":";
 end if;
+if assigned ignoreHighOrders then
+	print "ignoring group orders above the limit of the smallgroup databas";
+	IGNORE_GROUP_ORDERS_NOT_IN_SMALLGROUP_DATABASE:=true;
+end if;
+
+The optional parameter ignoreHighOrders signifies that 
 
 minG:=StringToInteger(minG);
 maxG:=StringToInteger(maxG);

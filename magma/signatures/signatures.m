@@ -26,6 +26,8 @@ Signatures(g) returns the signatures with genus g, by retrieving the signatures 
 Signatures are represented by a record containing an integer d and a nondecreasing sequence of integers M=[m_1,...,m_r].
 
 Functions with name starting with _ are considered part of the implementation.
+
+if the variable IGNORE_GROUP_ORDERS_NOT_IN_SMALLGROUP_DATABASE is set, then no error is returned when trying to compute signatures with group order exceeding 2000
 */
 
 load "magma/signatures/sequences.m";
@@ -33,6 +35,7 @@ load "magma/signatures/persist.m";
 load "magma/include/genus.m";
 
 _SIGNATURES_PATH:="signatures";	//a directory where signatures are stored
+_HIGHEST_GROUP_ORDER_IN_SMALLGROUP_DATABASE:=2000;
 
 SignatureFormat := recformat< d : Integers(), M : SeqEnum >;
 
@@ -109,6 +112,12 @@ end procedure;
 
 /* Retrieve from disk and return the signatures corresponding to g,d,r */
 _Signatures_g_d_r:=function(g,d,r)
+	if d gt _HIGHEST_GROUP_ORDER_IN_SMALLGROUP_DATABASE then
+		if assigned IGNORE_GROUP_ORDERS_NOT_IN_SMALLGROUP_DATABASE then
+			return [];
+		else
+			error "Cannot retrieve signatures for g,d,r equal to ",g,d,r,", as database of small groups only goes up to order 2000";
+		end if;	
    	signatures_d_r:=ReadFromFile(_SIGNATURES_PATH,[d,r]);
    	if g gt #signatures_d_r then
      		error "signatures only computed up to g=",#signatures_d_r;
