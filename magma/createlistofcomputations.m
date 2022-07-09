@@ -30,8 +30,6 @@ By default, if group orders above the limit of the smallgroup database occur, an
 magma maxG:=40 outFile:=computations.csv ignoreHighOrders:=true magma/signatures/createlistofcomputations.m 
 */
 
-load "magma/signatures/signatures.m";
-
 if not assigned maxG then error "define maxG (and possibly minG, defaulting to 2) before invoking this program"; end if;
 if not assigned minG then minG:="2"; end if;
 if not assigned maxR then maxR:="-1"; end if;
@@ -43,11 +41,13 @@ else
 	print "creating list of computations, ",minG,"\\leq g \\leq ",maxG, ", ",minR,"\\leq r",":";
 end if;
 if assigned ignoreHighOrders then
-	print "ignoring group orders above the limit of the smallgroup databas";
+	print "ignoring group orders above the limit of the smallgroup database";
 	IGNORE_GROUP_ORDERS_NOT_IN_SMALLGROUP_DATABASE:=true;
+else
+	IGNORE_GROUP_ORDERS_NOT_IN_SMALLGROUP_DATABASE:=false;
 end if;
 
-The optional parameter ignoreHighOrders signifies that 
+load "magma/signatures/signatures.m";
 
 minG:=StringToInteger(minG);
 maxG:=StringToInteger(maxG);

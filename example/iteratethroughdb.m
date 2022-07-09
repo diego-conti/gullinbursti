@@ -3,7 +3,7 @@ load "magma/signatures/signatures.m";
 
 noGeneratorsByG:=[];
 
-for g in [2..15] do
+for g in [30..33] do
 numberOfGeneratorsFound:=0;
 for signature in Signatures(g) do
 	M:=signature`M;
