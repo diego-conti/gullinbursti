@@ -20,11 +20,12 @@ This code should be loaded into the work script.
 
 The work script should read the computations to be done from dataFile and write the output of each computation to standard output using the function WriteComputation.
 
-A function ReadComputation is also provided to read the output of WriteComputation (for usage without hliðskjálf).
+A function ReadComputation is also provided to read the output of WriteComputation (for usage without Hliðskjálf).
 
 */
 
-if not assigned processId then error "variable processId should be assigned to unique string"; end if;
+if assigned printVersion then print "undefined"; quit; end if;
+
 if not assigned dataFile then error "variable dataFile should point to a valid data file"; end if;
 if not assigned megabytes then error  "variable megabytes should indicate a memory limit in MB (or 0 for no limit)"; end if;
 
